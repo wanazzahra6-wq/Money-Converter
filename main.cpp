@@ -3,7 +3,7 @@ using namespace std;
 
 void homepage();
 void konversi();
-void updatekurs();
+void loginadmin();
 void riwayat();
 
 int main() {
@@ -37,7 +37,7 @@ void homepage() {
                 break;
 
             case 2:
-                updatekurs();
+                loginadmin();
                 break;
 
             case 3:
@@ -52,14 +52,14 @@ void homepage() {
                 cout << "\nMenu tidak valid!" << endl;
             }
     system("pause");
-        } while(pilih != 5);
+        } while(pilih != 4);
 }
 void konversi() {
     cout << "\n=== konfersi kurs ===" << endl;
 }
 
-void updatekurs() {
-    cout << "\n=== Update kurs ===" << endl;
+void loginadmin() {
+    cout << "\n=== Admin Login ===" << endl;
 }
 
 void riwayat() {
