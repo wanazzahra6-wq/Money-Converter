@@ -4,7 +4,6 @@ using namespace std;
 void homepage();
 void konversi();
 void updatekurs();
-void loginadmin();
 void riwayat();
 
 int main() {
@@ -25,9 +24,8 @@ void homepage() {
 
         cout << "[1] Currency Converter" << endl;
         cout << "[2] Update Exchange Rate" << endl;
-        cout << "[3] Admin Login" << endl;
-        cout << "[4] Recent Conversion" << endl;
-        cout << "[5] Exit" << endl;
+        cout << "[3] Recent Conversion" << endl;
+        cout << "[4] Exit" << endl;
         cout << endl;
         cout << "Pilih menu : ";
         cin >> pilih;
@@ -43,14 +41,10 @@ void homepage() {
                 break;
 
             case 3:
-                loginadmin();
-                break;
-
-            case 4:
                 riwayat();
                 break;
 
-            case 5:
+            case 4:
                 cout << "\nProgram selesai..." << endl;
                 break;
 
@@ -68,12 +62,6 @@ void updatekurs() {
     cout << "\n=== Update kurs ===" << endl;
 }
 
-void loginadmin() {
-    cout << "\n=== Admin Login ===" << endl;
-}
-
 void riwayat() {
     cout << "\n=== Riwayat konversi ===" << endl;
 }
-
-
