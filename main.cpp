@@ -1,9 +1,10 @@
 #include <iostream>
 #include "loginadmin.h"
+#include "data.h"
+#include "konversi.h"
 using namespace std;
 
 void homepage();
-void konversi();
 void riwayat();
 
 int main() {
@@ -54,10 +55,6 @@ void homepage() {
     system("pause");
         } while(pilih != 4);
 }
-void konversi() {
-    cout << "\n=== konfersi kurs ===" << endl;
-}
-
 void riwayat() {
     cout << "\n=== Riwayat konversi ===" << endl;
 }
