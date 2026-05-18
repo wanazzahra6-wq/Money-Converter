@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "data.h"
 
 using namespace std;
 
@@ -24,9 +25,26 @@ void loginadmin() {
 
         cout << "\nLogin berhasil!" << endl;
 
-        // nanti di sini bisa dipanggil updatekurs();
+    int pilih;
+    float kursBaru;
 
+    cout << "\n=== UPDATE KURS ===\n" << endl;
+
+    for(int i = 0; i < 15; i++) {
+        cout << i + 1 << ". " << namaMataUang[i] << endl;
     }
+
+    cout << "\nPilih mata uang : ";
+    cin >> pilih;
+
+    cout << "Masukkan kurs baru : ";
+    cin >> kursBaru;
+
+    kurs[pilih - 1] = kursBaru;
+
+    cout << "\nKurs berhasil diupdate!\n";
+    }   
+    
     else {
 
         cout << "\nUsername atau password salah!" << endl;

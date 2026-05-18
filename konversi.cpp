@@ -2,6 +2,9 @@
 #include <limits>
 #include "konversi.h"
 #include "data.h"
+#include "riwayat.h"
+#include <iomanip>
+#include <sstream>
 
 using namespace std;
 
@@ -63,4 +66,15 @@ void konversi() {
          << hasil << " "
          << namaMataUang[tujuan - 1]
          << endl;
+
+    ostringstream out;
+
+    out << fixed << setprecision(2);
+    out << jumlah << " = " << hasil;
+
+    tambahRiwayat(
+        namaMataUang[asal - 1] + " -> " +
+        namaMataUang[tujuan - 1] + ": " +
+        out.str()
+    );
 }

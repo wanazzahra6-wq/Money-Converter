@@ -2,10 +2,10 @@
 #include "loginadmin.h"
 #include "data.h"
 #include "konversi.h"
+#include "riwayat.h"
 using namespace std;
 
 void homepage();
-void riwayat();
 
 int main() {
     homepage();
@@ -54,7 +54,4 @@ void homepage() {
             }
     system("pause");
         } while(pilih != 4);
-}
-void riwayat() {
-    cout << "\n=== Riwayat konversi ===" << endl;
 }
