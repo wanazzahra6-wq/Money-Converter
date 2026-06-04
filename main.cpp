@@ -1,57 +1,24 @@
-#include <iostream>
-#include "loginadmin.h"
-#include "data.h"
-#include "konversi.h"
-#include "riwayat.h"
-using namespace std;
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include "backend.h"
 
-void homepage();
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
 
-int main() {
-    homepage();
-    return 0;
-}
-void homepage() {
+    Backend backend;
 
-    int pilih;
+    QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("backend", &backend);
 
-    do{
-        system("cls");
+    const QUrl url(u"qrc:/main.qml"_qs);
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
+                         if (!obj && url == objUrl)
+                             QCoreApplication::exit(-1);
+                     }, Qt::QueuedConnection);
+    engine.load(url);
 
-        cout << "========================================" << endl;
-        cout << "           CUAN CONVERTER               " << endl;
-        cout << "========================================" << endl;
-        cout << endl;
-
-        cout << "[1] Currency Converter" << endl;
-        cout << "[2] Update Exchange Rate" << endl;
-        cout << "[3] Recent Conversion" << endl;
-        cout << "[4] Exit" << endl;
-        cout << endl;
-        cout << "Pilih menu : ";
-        cin >> pilih;
-
-        switch(pilih) {
-
-            case 1:
-                konversi();
-                break;
-
-            case 2:
-                loginadmin();
-                break;
-
-            case 3:
-                riwayat();
-                break;
-
-            case 4:
-                cout << "\nProgram selesai..." << endl;
-                break;
-
-            default:
-                cout << "\nMenu tidak valid!" << endl;
-            }
-    system("pause");
-        } while(pilih != 4);
+    return app.exec();
 }
