@@ -28,16 +28,18 @@ Window {
     Rectangle {
         anchors.fill: parent
         color: colorPrimary
-        visible: currentPage === 0
+        opacity: currentPage === 0 ? 1.0 : 0.0
+        visible: opacity > 0
+        Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
 
         Column {
             anchors.centerIn: parent
-            spacing: 20
+            spacing: 22
 
             Rectangle {
-                width: 100
-                height: 100
-                radius: 50
+                width: 102
+                height: 102
+                radius: 51
                 color: "#ffffff30"
                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -65,7 +67,7 @@ Window {
         }
 
         Timer {
-            interval: 2000
+            interval: 2050
             running: true
             onTriggered: currentPage = 1
         }
@@ -75,34 +77,40 @@ Window {
     Rectangle {
         anchors.fill: parent
         color: colorBg
-        visible: currentPage === 1
+        opacity: currentPage === 1 ? 1.0 : 0.0
+        visible: opacity > 0
+        Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
 
         // Header ungu atas
         Rectangle {
             id: homeHeader
             anchors.top: parent.top
             width: parent.width
-            height: 110
-            color: colorPrimary
-            radius: 24
-            // Tutup sudut atas yang ikut melengkung
+            height: 112
+            radius: 25
+            
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: colorPrimary }
+                GradientStop { position: 1.0; color: colorPrimaryDark }
+            }
+            
             Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 width: parent.width
-                height: 24
+                height: 25
                 color: colorPrimary
             }
 
             Row {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
-                anchors.leftMargin: 20
+                anchors.leftMargin: 22
                 anchors.right: parent.right
-                anchors.rightMargin: 20
+                anchors.rightMargin: 22
 
                 Column {
-                    spacing: 2
+                    spacing: 3
                     anchors.verticalCenter: parent.verticalCenter
                     Text {
                         text: "Hi! Welcome 👋"
@@ -118,12 +126,12 @@ Window {
                     }
                 }
 
-                Item { width: parent.width - 220; height: 1 }
+                Item { width: parent.width - 224; height: 1 }
 
                 Rectangle {
-                    width: 56
-                    height: 56
-                    radius: 28
+                    width: 58
+                    height: 58
+                    radius: 29
                     color: "#ffffff30"
                     anchors.verticalCenter: parent.verticalCenter
                     Text { anchors.centerIn: parent; text: "💵"; font.pixelSize: 28 }
@@ -133,10 +141,10 @@ Window {
 
         Column {
             anchors.top: homeHeader.bottom
-            anchors.topMargin: 24
+            anchors.topMargin: 25
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 20
-            width: parent.width - 40
+            spacing: 21
+            width: parent.width - 44
 
             Text {
                 text: "OUR FEATURES"
@@ -148,52 +156,61 @@ Window {
 
             Grid {
                 columns: 2
-                spacing: 16
+                spacing: 17
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 // Convert
                 Rectangle {
-                    width: 140
-                    height: 120
-                    radius: 16
+                    width: 142
+                    height: 122
+                    radius: 17
                     color: colorPrimary
+                    scale: mouseConv.pressed ? 0.95 : 1.0
+                    Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
+
                     Column {
                         anchors.centerIn: parent
-                        spacing: 10
+                        spacing: 11
                         Text { anchors.horizontalCenter: parent.horizontalCenter; text: "🔄"; font.pixelSize: 32 }
                         Text { anchors.horizontalCenter: parent.horizontalCenter; text: "Convert"; color: "white"; font.pixelSize: 14; font.bold: true }
                     }
-                    MouseArea { anchors.fill: parent; onClicked: currentPage = 2 }
+                    MouseArea { id: mouseConv; anchors.fill: parent; onClicked: currentPage = 2 }
                 }
 
                 // History
                 Rectangle {
-                    width: 140
-                    height: 120
-                    radius: 16
+                    width: 142
+                    height: 122
+                    radius: 17
                     color: colorPrimary
+                    scale: mouseHist.pressed ? 0.95 : 1.0
+                    Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
+
                     Column {
                         anchors.centerIn: parent
-                        spacing: 10
+                        spacing: 11
                         Text { anchors.horizontalCenter: parent.horizontalCenter; text: "🕐"; font.pixelSize: 32 }
                         Text { anchors.horizontalCenter: parent.horizontalCenter; text: "History"; color: "white"; font.pixelSize: 14; font.bold: true }
                     }
-                    MouseArea { anchors.fill: parent; onClicked: currentPage = 3 }
+                    MouseArea { id: mouseHist; anchors.fill: parent; onClicked: currentPage = 3 }
                 }
 
                 // Admin
                 Rectangle {
-                    width: 140
-                    height: 120
-                    radius: 16
+                    width: 142
+                    height: 122
+                    radius: 17
                     color: colorPrimary
+                    scale: mouseAdmin.pressed ? 0.95 : 1.0
+                    Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
+
                     Column {
                         anchors.centerIn: parent
-                        spacing: 10
+                        spacing: 11
                         Text { anchors.horizontalCenter: parent.horizontalCenter; text: "⚙️"; font.pixelSize: 32 }
                         Text { anchors.horizontalCenter: parent.horizontalCenter; text: "Admin"; color: "white"; font.pixelSize: 14; font.bold: true }
                     }
-                    MouseArea { anchors.fill: parent; onClicked: currentPage = 4 }
+                    MouseArea { id: mouseAdmin; anchors.fill: parent; onClicked: currentPage = 4 }
                 }
             }
         }
@@ -206,7 +223,9 @@ Window {
         id: konversiPage
         anchors.fill: parent
         color: colorBg
-        visible: currentPage === 2
+        opacity: currentPage === 2 ? 1.0 : 0.0
+        visible: opacity > 0
+        Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
 
         property int asalIndex: 0
         property int tujuanIndex: 1
@@ -220,14 +239,14 @@ Window {
             id: konversiHeader
             anchors.top: parent.top
             width: parent.width
-            height: 56
+            height: 57
             color: colorPrimary
-            radius: 20
+            radius: 21
             Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 width: parent.width
-                height: 20
+                height: 21
                 color: colorPrimary
             }
 
@@ -242,10 +261,10 @@ Window {
 
         Column {
             anchors.top: konversiHeader.bottom
-            anchors.topMargin: 24
+            anchors.topMargin: 25
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width - 40
-            spacing: 14
+            spacing: 15
 
             Text { text: "From"; color: colorTextGray; font.pixelSize: 12 }
             ComboBox {
@@ -254,14 +273,14 @@ Window {
                 model: backend.getMataUang()
                 onCurrentIndexChanged: konversiPage.asalIndex = currentIndex
                 contentItem: Text {
-                    leftPadding: 12
+                    leftPadding: 13
                     text: comboAsal.displayText
                     color: colorTextDark
                     font.pixelSize: 13
                     verticalAlignment: Text.AlignVCenter
                 }
                 background: Rectangle {
-                    radius: 8
+                    radius: 9
                     color: colorFieldBg
                     border.color: colorPrimary
                     border.width: 1
@@ -276,14 +295,14 @@ Window {
                 currentIndex: 1
                 onCurrentIndexChanged: konversiPage.tujuanIndex = currentIndex
                 contentItem: Text {
-                    leftPadding: 12
+                    leftPadding: 13
                     text: comboTujuan.displayText
                     color: colorTextDark
                     font.pixelSize: 13
                     verticalAlignment: Text.AlignVCenter
                 }
                 background: Rectangle {
-                    radius: 8
+                    radius: 9
                     color: colorFieldBg
                     border.color: colorPrimary
                     border.width: 1
@@ -298,7 +317,7 @@ Window {
                 placeholderText: "Enter amount"
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 background: Rectangle {
-                    radius: 8
+                    radius: 9
                     color: colorFieldBg
                     border.color: colorPrimary
                     border.width: 1
@@ -307,8 +326,8 @@ Window {
 
             Rectangle {
                 width: parent.width
-                height: 48
-                radius: 10
+                height: 49
+                radius: 11
                 color: colorPrimary
 
                 Text {
@@ -328,7 +347,26 @@ Window {
                             konversiPage.namaAsal = mataUang[konversiPage.asalIndex]
                             konversiPage.namaTujuan = mataUang[konversiPage.tujuanIndex]
                             konversiPage.jumlahAsal = jumlah
-                            konversiPage.hasilText = r.toFixed(2)
+                            
+                            var strR = r.toFixed(2)
+                            var parts = strR.split(".")
+                            var bulat = parseInt(parts[0])
+                            var desimal = parts.length > 1 ? parseInt(parts[1]) : 0
+                            
+                            if (desimal === 0) {
+                                konversiPage.hasilText = bulat.toString()
+                            } else {
+                                var getGcd = function(a, b) { return b ? getGcd(b, a % b) : a; }
+                                var pembagi = getGcd(desimal, 100)
+                                var num = desimal / pembagi
+                                var den = 100 / pembagi
+                                if (bulat === 0) {
+                                    konversiPage.hasilText = num + "/" + den
+                                } else {
+                                    var top = (bulat * den) + num
+                                    konversiPage.hasilText = top + "/" + den
+                                }
+                            }
                         }
                     }
                 }
@@ -336,14 +374,14 @@ Window {
 
             Rectangle {
                 width: parent.width
-                height: 72
-                radius: 12
+                height: 73
+                radius: 13
                 color: colorCardBg
                 visible: konversiPage.hasilText !== ""
 
                 Column {
                     anchors.centerIn: parent
-                    spacing: 6
+                    spacing: 7
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: konversiPage.namaAsal + " → " + konversiPage.namaTujuan
@@ -368,7 +406,9 @@ Window {
     Rectangle {
         anchors.fill: parent
         color: colorBg
-        visible: currentPage === 3
+        opacity: currentPage === 3 ? 1.0 : 0.0
+        visible: opacity > 0
+        Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
 
         onVisibleChanged: {
             if (visible) riwayatList.model = backend.getRiwayat()
@@ -379,14 +419,14 @@ Window {
             id: riwayatHeader
             anchors.top: parent.top
             width: parent.width
-            height: 56
+            height: 57
             color: colorPrimary
-            radius: 20
+            radius: 21
             Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 width: parent.width
-                height: 20
+                height: 21
                 color: colorPrimary
             }
 
@@ -402,21 +442,21 @@ Window {
         ListView {
             id: riwayatList
             anchors.top: riwayatHeader.bottom
-            anchors.topMargin: 16
+            anchors.topMargin: 17
             anchors.left: parent.left
-            anchors.leftMargin: 20
+            anchors.leftMargin: 21
             anchors.right: parent.right
-            anchors.rightMargin: 20
+            anchors.rightMargin: 21
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 70
+            anchors.bottomMargin: 71
             model: backend.getRiwayat()
             clip: true
-            spacing: 10
+            spacing: 11
 
             delegate: Rectangle {
                 width: riwayatList.width
-                height: 72
-                radius: 12
+                height: 73
+                radius: 13
                 color: colorCardBg
 
                 property var parts: modelData.split(": ")
@@ -426,8 +466,8 @@ Window {
                 Column {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    spacing: 4
+                    anchors.leftMargin: 17
+                    spacing: 5
 
                     Text {
                         text: baris1
@@ -457,20 +497,11 @@ Window {
 
     // ===== ADMIN LOGIN =====
     Rectangle {
-        id: adminPage
         anchors.fill: parent
         color: colorBg
-        visible: currentPage === 4
-
-        // --- KONFIGURASI TAMPILAN (Bisa Diubah via GitHub PR) ---
-        // Kamu bisa menyesuaikan nilai-nilai ini tanpa merusak struktur bawahnya
-        property int headerHeight: 56
-        property int formTopMargin: 60
-        property int fieldRadius: 8
-        property int buttonHeight: 48
-        property color errorColor: "#E53E3E" // Merah sedikit lebih soft
-        property int spacingValue: 16
-        // --------------------------------------------------------
+        opacity: currentPage === 4 ? 1.0 : 0.0
+        visible: opacity > 0
+        Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
 
         property string pesanAdmin: ""
 
@@ -483,16 +514,14 @@ Window {
             id: adminHeader
             anchors.top: parent.top
             width: parent.width
-            height: adminPage.headerHeight // Menggunakan properti kustom
+            height: 57
             color: colorPrimary
-            radius: 20
-            
-            // Tutup sudut atas yang ikut melengkung
+            radius: 21
             Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 width: parent.width
-                height: 20
+                height: 21
                 color: colorPrimary
             }
 
@@ -507,10 +536,10 @@ Window {
 
         Column {
             anchors.top: adminHeader.bottom
-            anchors.topMargin: adminPage.formTopMargin // Menggunakan properti kustom
+            anchors.topMargin: 61
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width - 40
-            spacing: adminPage.spacingValue // Menggunakan properti kustom
+            spacing: 17
 
             Text {
                 text: "Admin Login"
@@ -520,7 +549,7 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Item { height: 8; width: 1 }
+            Item { height: 9; width: 1 }
 
             Text { text: "Username :"; color: colorTextGray; font.pixelSize: 13 }
             TextField {
@@ -529,7 +558,7 @@ Window {
                 color: colorTextDark
                 placeholderText: "Username"
                 background: Rectangle {
-                    radius: adminPage.fieldRadius // Menggunakan properti kustom
+                    radius: 9
                     color: colorFieldBg
                     border.color: colorPrimary
                     border.width: 1
@@ -544,7 +573,7 @@ Window {
                 placeholderText: "Password"
                 echoMode: TextInput.Password
                 background: Rectangle {
-                    radius: adminPage.fieldRadius // Menggunakan properti kustom
+                    radius: 9
                     color: colorFieldBg
                     border.color: colorPrimary
                     border.width: 1
@@ -552,28 +581,18 @@ Window {
             }
 
             Text {
-                // Perbaikan referensi parent: karena berada di dalam Column, parent-nya adalah Column. 
-                // parent.parent merujuk ke adminPage.
-                text: adminPage.pesanAdmin 
-                color: adminPage.errorColor // Menggunakan properti kustom
+                text: parent.parent.pesanAdmin
+                color: "red"
                 font.pixelSize: 12
-                visible: adminPage.pesanAdmin !== ""
+                visible: parent.parent.pesanAdmin !== ""
             }
 
             Rectangle {
                 width: parent.width
-                height: adminPage.buttonHeight // Menggunakan properti kustom
-                radius: 10
+                height: 49
+                radius: 11
                 color: colorPrimary
-                
-                Text { 
-                    anchors.centerIn: parent; 
-                    text: "Login"; 
-                    color: "white"; 
-                    font.bold: true; 
-                    font.pixelSize: 15 
-                }
-                
+                Text { anchors.centerIn: parent; text: "Login"; color: "white"; font.bold: true; font.pixelSize: 15 }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -581,8 +600,7 @@ Window {
                             rootWindow.adminLoggedIn = true
                             currentPage = 5
                         } else {
-                            // Langsung menargetkan ID adminPage agar lebih presisi
-                            adminPage.pesanAdmin = "Username atau password salah!"
+                            parent.parent.parent.pesanAdmin = "Username atau password salah!"
                         }
                     }
                 }
@@ -591,11 +609,14 @@ Window {
 
         BottomNav { }
     }
+
     // ===== UPDATE KURS =====
     Rectangle {
         anchors.fill: parent
         color: colorBg
-        visible: currentPage === 5
+        opacity: currentPage === 5 ? 1.0 : 0.0
+        visible: opacity > 0
+        Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.InOutQuad } }
 
         property string pesanUpdate: ""
 
@@ -607,14 +628,14 @@ Window {
             id: updateHeader
             anchors.top: parent.top
             width: parent.width
-            height: 56
+            height: 57
             color: colorPrimary
-            radius: 20
+            radius: 21
             Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 width: parent.width
-                height: 20
+                height: 21
                 color: colorPrimary
             }
 
@@ -628,11 +649,11 @@ Window {
 
             Rectangle {
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 13
                 anchors.verticalCenter: parent.verticalCenter
-                width: 76
-                height: 32
-                radius: 8
+                width: 77
+                height: 33
+                radius: 9
                 color: "white"
 
                 Text {
@@ -658,7 +679,7 @@ Window {
             id: tableHeader
             anchors.top: updateHeader.bottom
             width: parent.width
-            height: 36
+            height: 37
             color: colorCardBg
 
             Text {
@@ -674,13 +695,13 @@ Window {
             id: colHeader
             anchors.top: tableHeader.bottom
             width: parent.width
-            height: 28
+            height: 29
 
             Repeater {
                 model: ["Currency", "Rate", "Change", "Last Update"]
                 delegate: Rectangle {
                     width: index === 0 ? 80 : index === 3 ? 100 : 70
-                    height: 28
+                    height: 29
                     color: "#EDE9FE"
                     Text {
                         anchors.centerIn: parent
@@ -703,7 +724,7 @@ Window {
 
             delegate: Rectangle {
                 width: kursListView.width
-                height: 38
+                height: 39
                 color: index % 2 === 0 ? "white" : "#FAF5FF"
 
                 Row {
@@ -716,7 +737,7 @@ Window {
                         font.pixelSize: 12
                         font.bold: true
                         color: colorTextDark
-                        leftPadding: 12
+                        leftPadding: 13
                     }
                     Text {
                         width: 70
@@ -728,13 +749,13 @@ Window {
                     TextField {
                         id: changeField
                         width: 70
-                        height: 28
+                        height: 29
                         color: colorTextDark
                         placeholderText: "New"
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
                         font.pixelSize: 11
                         background: Rectangle {
-                            radius: 4
+                            radius: 5
                             color: colorFieldBg
                             border.color: "#C4B5FD"
                             border.width: 1
@@ -756,7 +777,7 @@ Window {
 
         Text {
             anchors.bottom: updateFooter.top
-            anchors.bottomMargin: 4
+            anchors.bottomMargin: 5
             anchors.horizontalCenter: parent.horizontalCenter
             text: parent.pesanUpdate
             color: parent.pesanUpdate.includes("berhasil") ? "green" : "red"
@@ -767,16 +788,16 @@ Window {
         Rectangle {
             id: updateFooter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 62
+            anchors.bottomMargin: 63
             width: parent.width
-            height: 52
+            height: 53
             color: "white"
 
             Rectangle {
                 anchors.centerIn: parent
                 width: parent.width - 40
-                height: 44
-                radius: 10
+                height: 45
+                radius: 11
                 color: colorPrimary
 
                 Text {
@@ -820,15 +841,15 @@ Window {
     component BottomNav: Rectangle {
         anchors.bottom: parent.bottom
         width: parent.width
-        height: 60
+        height: 61
         color: colorPrimary
-        radius: 20
-        // Tutup sudut bawah yang ikut melengkung
+        radius: 21
+        
         Rectangle {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             width: parent.width
-            height: 20
+            height: 21
             color: colorPrimary
         }
 
@@ -846,24 +867,22 @@ Window {
 
                 delegate: Rectangle {
                     width: parent.width / 5
-                    height: 60
-                    // Tab aktif: sedikit lebih terang (ungu muda transparan)
+                    height: 61
                     color: rootWindow.currentPage === modelData.page ? "#ffffff25" : "transparent"
 
-                    // Garis indikator bawah tab aktif
                     Rectangle {
                         anchors.bottom: parent.bottom
                         anchors.horizontalCenter: parent.horizontalCenter
                         width: parent.width - 10
-                        height: 3
-                        radius: 2
+                        height: 4
+                        radius: 3
                         color: "white"
                         visible: rootWindow.currentPage === modelData.page
                     }
 
                     Column {
                         anchors.centerIn: parent
-                        spacing: 2
+                        spacing: 3
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
