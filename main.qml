@@ -201,7 +201,7 @@ Window {
         BottomNav { }
     }
 
-    // ===== KONVERSI =====
+    // ===== FITUR KONVERSI =====
     Rectangle {
         id: konversiPage
         anchors.fill: parent
@@ -457,9 +457,20 @@ Window {
 
     // ===== ADMIN LOGIN =====
     Rectangle {
+        id: adminPage
         anchors.fill: parent
         color: colorBg
         visible: currentPage === 4
+
+        // --- KONFIGURASI TAMPILAN (Bisa Diubah via GitHub PR) ---
+        // Kamu bisa menyesuaikan nilai-nilai ini tanpa merusak struktur bawahnya
+        property int headerHeight: 56
+        property int formTopMargin: 60
+        property int fieldRadius: 8
+        property int buttonHeight: 48
+        property color errorColor: "#E53E3E" // Merah sedikit lebih soft
+        property int spacingValue: 16
+        // --------------------------------------------------------
 
         property string pesanAdmin: ""
 
@@ -472,9 +483,11 @@ Window {
             id: adminHeader
             anchors.top: parent.top
             width: parent.width
-            height: 56
+            height: adminPage.headerHeight // Menggunakan properti kustom
             color: colorPrimary
             radius: 20
+            
+            // Tutup sudut atas yang ikut melengkung
             Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
@@ -494,10 +507,10 @@ Window {
 
         Column {
             anchors.top: adminHeader.bottom
-            anchors.topMargin: 60
+            anchors.topMargin: adminPage.formTopMargin // Menggunakan properti kustom
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width - 40
-            spacing: 16
+            spacing: adminPage.spacingValue // Menggunakan properti kustom
 
             Text {
                 text: "Admin Login"
@@ -516,7 +529,7 @@ Window {
                 color: colorTextDark
                 placeholderText: "Username"
                 background: Rectangle {
-                    radius: 8
+                    radius: adminPage.fieldRadius // Menggunakan properti kustom
                     color: colorFieldBg
                     border.color: colorPrimary
                     border.width: 1
@@ -531,7 +544,7 @@ Window {
                 placeholderText: "Password"
                 echoMode: TextInput.Password
                 background: Rectangle {
-                    radius: 8
+                    radius: adminPage.fieldRadius // Menggunakan properti kustom
                     color: colorFieldBg
                     border.color: colorPrimary
                     border.width: 1
@@ -539,18 +552,28 @@ Window {
             }
 
             Text {
-                text: parent.parent.pesanAdmin
-                color: "red"
+                // Perbaikan referensi parent: karena berada di dalam Column, parent-nya adalah Column. 
+                // parent.parent merujuk ke adminPage.
+                text: adminPage.pesanAdmin 
+                color: adminPage.errorColor // Menggunakan properti kustom
                 font.pixelSize: 12
-                visible: parent.parent.pesanAdmin !== ""
+                visible: adminPage.pesanAdmin !== ""
             }
 
             Rectangle {
                 width: parent.width
-                height: 48
+                height: adminPage.buttonHeight // Menggunakan properti kustom
                 radius: 10
                 color: colorPrimary
-                Text { anchors.centerIn: parent; text: "Login"; color: "white"; font.bold: true; font.pixelSize: 15 }
+                
+                Text { 
+                    anchors.centerIn: parent; 
+                    text: "Login"; 
+                    color: "white"; 
+                    font.bold: true; 
+                    font.pixelSize: 15 
+                }
+                
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -558,7 +581,8 @@ Window {
                             rootWindow.adminLoggedIn = true
                             currentPage = 5
                         } else {
-                            parent.parent.parent.pesanAdmin = "Username atau password salah!"
+                            // Langsung menargetkan ID adminPage agar lebih presisi
+                            adminPage.pesanAdmin = "Username atau password salah!"
                         }
                     }
                 }
@@ -567,7 +591,6 @@ Window {
 
         BottomNav { }
     }
-
     // ===== UPDATE KURS =====
     Rectangle {
         anchors.fill: parent
