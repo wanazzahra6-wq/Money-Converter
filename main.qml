@@ -347,25 +347,7 @@ Window {
                             konversiPage.namaAsal = mataUang[konversiPage.asalIndex]
                             konversiPage.namaTujuan = mataUang[konversiPage.tujuanIndex]
                             konversiPage.jumlahAsal = jumlah
-                            
-                            var strR = r.toFixed(2)
-                            var parts = strR.split(".")
-                            var bulat = parseInt(parts[0])
-                            var desimal = parts.length > 1 ? parseInt(parts[1]) : 0
-                            
-                            if (desimal === 0) {
-                                konversiPage.hasilText = bulat.toString()
-                            } else {
-                                var getGcd = function(a, b) { return b ? getGcd(b, a % b) : a; }
-                                var pembagi = getGcd(desimal, 100)
-                                var num = desimal / pembagi
-                                var den = 100 / pembagi
-                                if (bulat === 0) {
-                                    konversiPage.hasilText = num + "/" + den
-                                } else {
-                                    var top = (bulat * den) + num
-                                    konversiPage.hasilText = top + "/" + den
-                                }
+                            konversiPage.hasilText = r.toFixed(2)
                             }
                         }
                     }
